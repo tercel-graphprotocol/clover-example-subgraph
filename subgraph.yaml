@@ -1,0 +1,27 @@
+specVersion: 0.0.2
+description: Gravatar for Ethereum
+repository: https://github.com/tercel-graphprotocol/clover-example-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Gravity
+    network: clover
+    source:
+      address: '0xc56F17386B2c8EF0D58c64A39BAd24001e2D35B9'
+      abi: Gravity
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Gravatar
+      abis:
+        - name: Gravity
+          file: ./abis/Gravity.json
+      eventHandlers:
+        - event: NewGravatar(uint256,address,string,string)
+          handler: handleNewGravatar
+        - event: UpdatedGravatar(uint256,address,string,string)
+          handler: handleUpdatedGravatar
+      file: ./src/mapping.ts
